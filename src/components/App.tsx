@@ -5,7 +5,7 @@ import Home from "../pages/Home/Home";
 const App: FC = () => {
   return (
     <Routes>
-      <Route path="/home" element={<Home />} />
+      <Route path="/" element={<Home />} />
     </Routes>
   );
 };
