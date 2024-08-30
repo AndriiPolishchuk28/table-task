@@ -6,7 +6,7 @@ import "./styles/global.scss";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <BrowserRouter basename="/my-project">
+    <BrowserRouter basename="/table-task">
       <App />
     </BrowserRouter>
   </React.StrictMode>
