@@ -6,7 +6,7 @@ import { selectUsers } from "../../redux/users/selectors";
 const Home: FC = () => {
   const dispatch = useAppDispatch();
   const users = useAppSelector(selectUsers);
-  console.log(users);
+
   useEffect(() => {
     dispatch(getUsers());
   }, [dispatch]);
