@@ -14,6 +14,6 @@ export const getUsers = createAsyncThunk<
     const { data } = await axios.get("/users");
     return data;
   } catch (error) {
-    return thunkApi.rejectWithValue(error.message);
+    return thunkApi.rejectWithValue((error as Error).message);
   }
 });
