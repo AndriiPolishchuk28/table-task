@@ -1,5 +1,4 @@
 import { FC, useEffect } from "react";
-import Home from "../pages/Home/Home";
 import TableList from "./TableList/TableList";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { selectUsers } from "../redux/users/selectors";
@@ -15,7 +14,6 @@ const App: FC = () => {
 
   return (
     <>
-      <Home />
       <TableList users={users} />
     </>
   );
