@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,10 +7,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { User } from "../../redux/users/types";
 import InputList from "../InputList/InputList";
-import { useAppSelector } from "../../hooks/hooks";
-import { selectFilters } from "../../redux/users/selectors";
+import { selectFilters, selectUsers } from "../../redux/users/selectors";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "../../hooks/hooks";
+import { getUsers } from "../../redux/users/operations";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -33,12 +34,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const tableHeadData: string[] = ["Name", "Username", "Email", "Phone"];
 
-interface TableListProps {
-  users: User[];
-}
+const TableList: FC = () => {
+  const dispatch = useAppDispatch();
+  const users = useSelector(selectUsers);
+  const filters = useSelector(selectFilters);
 
-const TableList: FC<TableListProps> = ({ users }) => {
-  const filters = useAppSelector(selectFilters);
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch]);
 
   const filteredUsers = users.filter((user) => {
     return (
