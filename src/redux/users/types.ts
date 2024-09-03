@@ -1,11 +1,4 @@
-export type User = {
-  name: string;
-  email: string;
-  username: string;
-  phone: string;
-};
-
-export interface IFilters {
+export interface IUserValues {
   name: string;
   username: string;
   email: string;

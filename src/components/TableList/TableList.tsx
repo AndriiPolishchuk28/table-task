@@ -1,17 +1,26 @@
 import { FC, useEffect } from "react";
 import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@mui/material";
+import { tableCellClasses } from "@mui/material/TableCell";
 import InputList from "../InputList/InputList";
-import { selectFilters, selectUsers } from "../../redux/users/selectors";
+import {
+  selectFilters,
+  selectLoading,
+  selectUsers,
+} from "../../redux/users/selectors";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../hooks/hooks";
 import { getUsers } from "../../redux/users/operations";
+import { Loader } from "../Loader/Loader";
+import { IUserValues } from "../../redux/users/types";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -19,7 +28,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
+    fontSize: 16,
   },
 }));
 
@@ -32,12 +41,18 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const tableHeadData: string[] = ["Name", "Username", "Email", "Phone"];
+const tableHeadData: Array<keyof IUserValues> = [
+  "name",
+  "username",
+  "email",
+  "phone",
+];
 
 const TableList: FC = () => {
   const dispatch = useAppDispatch();
   const users = useSelector(selectUsers);
   const filters = useSelector(selectFilters);
+  const loading = useSelector(selectLoading);
 
   useEffect(() => {
     dispatch(getUsers());
@@ -54,26 +69,42 @@ const TableList: FC = () => {
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
+      <Table sx={{ minWidth: 700 }} aria-label="users table">
         <TableHead>
           <TableRow>
             {tableHeadData.map((name, id) => (
-              <StyledTableCell key={id}>{name}</StyledTableCell>
+              <StyledTableCell sx={{ textTransform: "capitalize" }} key={id}>
+                {name}
+              </StyledTableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
           <TableRow>
-            <InputList items={tableHeadData} />
+            {users.length > 0 && <InputList items={tableHeadData} />}
           </TableRow>
-          {filteredUsers.map((row) => (
-            <StyledTableRow key={row.name}>
-              <StyledTableCell>{row.name}</StyledTableCell>
-              <StyledTableCell>{row.username}</StyledTableCell>
-              <StyledTableCell>{row.email}</StyledTableCell>
-              <StyledTableCell>{row.phone}</StyledTableCell>
-            </StyledTableRow>
-          ))}
+          {loading ? (
+            <TableRow>
+              <TableCell colSpan={4} align="center">
+                <Loader />
+              </TableCell>
+            </TableRow>
+          ) : filteredUsers.length ? (
+            filteredUsers.map((row) => (
+              <StyledTableRow key={row.name}>
+                <StyledTableCell>{row.name}</StyledTableCell>
+                <StyledTableCell>{row.username}</StyledTableCell>
+                <StyledTableCell>{row.email}</StyledTableCell>
+                <StyledTableCell>{row.phone}</StyledTableCell>
+              </StyledTableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={4} align="center">
+                No found items with your filters
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </Table>
     </TableContainer>

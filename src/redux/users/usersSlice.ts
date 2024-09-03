@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { getUsers } from "./operations";
-import { IFilters, User } from "./types";
+import { IUserValues } from "./types";
 
-type UsersState = {
-  users: User[];
+export interface UsersState {
+  users: IUserValues[];
   loading: boolean;
   error: string | null;
-  filters: IFilters;
-};
+  filters: IUserValues;
+}
 
 const initialState: UsersState = {
   users: [],
@@ -29,6 +29,9 @@ const usersSlice = createSlice({
       const { name, value } = action.payload;
       state.filters = { ...state.filters, [name]: value };
     },
+    clearFilter(state, action: PayloadAction<string>) {
+      state.filters = { ...state.filters, [action.payload]: "" };
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -39,10 +42,13 @@ const usersSlice = createSlice({
       .addCase(getUsers.fulfilled, (state, action) => {
         state.users = action.payload;
         state.loading = false;
+      })
+      .addCase(getUsers.rejected, (state) => {
+        state.loading = false;
       });
   },
 });
 
-export const { setFilter } = usersSlice.actions;
+export const { setFilter, clearFilter } = usersSlice.actions;
 
 export const usersReducer = usersSlice.reducer;
