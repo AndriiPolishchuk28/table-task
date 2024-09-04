@@ -1,30 +1,19 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a React application that showcases a user management table with filtering capabilities. The goal of this task is to evaluate and demonstrate skills in creating a React application using Redux (either the Classic Redux approach or Redux Toolkit) and TypeScript.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Fetch User Data:** Retrieve and display user information from a mock API.
+- **Local Filtering:** Implement filtering functionality to allow users to search and filter the table based on user attributes (e.g., name, username, email, phone).
+- **State Management:** Use Redux Toolkit to manage the application's state effectively, ensuring scalability and maintainability.
+- **TypeScript Integration:** Ensure type safety and improve code reliability by using TypeScript throughout the application.
+- **Responsive UI:** Implement a user interface that is responsive and user-friendly.
 
-## Expanding the ESLint configuration
+## Technologies Used
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- **React:** JavaScript library for building user interfaces.
+- **Redux Toolkit:** A powerful toolset for efficient Redux development.
+- **TypeScript:** A strongly typed programming language that builds on JavaScript.
+- **Material-UI:** A popular React UI framework for building aesthetically pleasing components.
+- **Axios:** Promise-based HTTP client for making API requests.
