@@ -81,7 +81,9 @@ const TableList: FC = () => {
         </TableHead>
         <TableBody>
           <TableRow>
-            {users.length > 0 && <InputList items={tableHeadData} />}
+            {!loading && users.length > 0 && (
+              <InputList items={tableHeadData} />
+            )}
           </TableRow>
           {loading ? (
             <TableRow>

@@ -45,6 +45,7 @@ const usersSlice = createSlice({
       })
       .addCase(getUsers.rejected, (state) => {
         state.loading = false;
+        state.error = "Some error with the server";
       });
   },
 });
