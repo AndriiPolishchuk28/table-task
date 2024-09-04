@@ -12,6 +12,7 @@ import {
 import { tableCellClasses } from "@mui/material/TableCell";
 import InputList from "../InputList/InputList";
 import {
+  selectError,
   selectFilters,
   selectLoading,
   selectUsers,
@@ -53,6 +54,7 @@ const TableList: FC = () => {
   const users = useSelector(selectUsers);
   const filters = useSelector(selectFilters);
   const loading = useSelector(selectLoading);
+  const error = useSelector(selectError);
 
   useEffect(() => {
     dispatch(getUsers());
@@ -80,32 +82,42 @@ const TableList: FC = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableRow>
-            {!loading && users.length > 0 && (
-              <InputList items={tableHeadData} />
-            )}
-          </TableRow>
-          {loading ? (
+          {error ? (
             <TableRow>
               <TableCell colSpan={4} align="center">
-                <Loader />
+                {error}
               </TableCell>
             </TableRow>
-          ) : filteredUsers.length ? (
-            filteredUsers.map((row) => (
-              <StyledTableRow key={row.name}>
-                <StyledTableCell>{row.name}</StyledTableCell>
-                <StyledTableCell>{row.username}</StyledTableCell>
-                <StyledTableCell>{row.email}</StyledTableCell>
-                <StyledTableCell>{row.phone}</StyledTableCell>
-              </StyledTableRow>
-            ))
           ) : (
-            <TableRow>
-              <TableCell colSpan={4} align="center">
-                No found items with your filters
-              </TableCell>
-            </TableRow>
+            <>
+              <TableRow>
+                {!loading && users.length > 0 && (
+                  <InputList items={tableHeadData} />
+                )}
+              </TableRow>
+              {loading ? (
+                <TableRow>
+                  <TableCell colSpan={4} align="center">
+                    <Loader />
+                  </TableCell>
+                </TableRow>
+              ) : filteredUsers.length ? (
+                filteredUsers.map((row) => (
+                  <StyledTableRow key={row.name}>
+                    <StyledTableCell>{row.name}</StyledTableCell>
+                    <StyledTableCell>{row.username}</StyledTableCell>
+                    <StyledTableCell>{row.email}</StyledTableCell>
+                    <StyledTableCell>{row.phone}</StyledTableCell>
+                  </StyledTableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={4} align="center">
+                    No found items with your filters
+                  </TableCell>
+                </TableRow>
+              )}
+            </>
           )}
         </TableBody>
       </Table>
